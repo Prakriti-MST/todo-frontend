@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, unsetUser, authFailure, setLoading } from "../../slices/authSlice";
+import {
+  setUser,
+  unsetUser,
+  authFailure,
+  setLoading,
+} from "../../slices/authSlice";
 import { loginApi } from "../../api/authApi";
 import setAuthToken from "../../utils/setAuthToken";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +30,9 @@ export default function Login() {
 
       nav("/dashboard");
     } catch (err) {
-      dispatch(authFailure(err));
+      const message =
+        err?.response?.data?.message || err.message || "Login failed";
+      dispatch(authFailure(message));
     }
   };
 
@@ -53,7 +60,6 @@ export default function Login() {
         className="bg-blue-600 text-white px-4 py-2"
       >
         {loading ? "Loading..." : "Login"}
-
       </button>
     </form>
   );

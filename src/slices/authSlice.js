@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
   token: localStorage.getItem("token") || null,
@@ -12,7 +11,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setLoading : (state, action) => {
+    setLoading: (state, action) => {
       state.loading = action.payload;
     },
     setUser: (state, action) => {
@@ -29,12 +28,11 @@ const authSlice = createSlice({
     },
     authFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
-      state.user = null;
-      state.token = null;
+      state.error = action.payload; // This will now be a string like "User not found"
     },
   },
 });
 
-export const { setUser, unsetUser, authFailure,setLoading } = authSlice.actions;
+export const { setUser, unsetUser, authFailure, setLoading } =
+  authSlice.actions;
 export default authSlice.reducer;
