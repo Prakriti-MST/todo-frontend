@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUser,
   unsetUser,
-  authFailure,
-  setLoading,
+  setError,unsetError,  setLoading,
 } from "../../slices/authSlice";
 import { signupApi } from "../../api/authApi";
 import setAuthToken from "../../utils/setAuthToken";
@@ -15,6 +14,10 @@ export default function Signup() {
   const { loading, error } = useSelector((s) => s.auth);
   const dispatch = useDispatch();
   const nav = useNavigate();
+  
+  useEffect(() => {
+    dispatch(unsetError());
+  })
 
   const submit = async (e) => {
     e.preventDefault();
@@ -29,7 +32,7 @@ export default function Signup() {
       dispatch(setUser({ user, token }));
       nav("/dashboard");
     } catch (err) {
-      dispatch(authFailure(err));
+      dispatch(setError(err));
     }
   };
 

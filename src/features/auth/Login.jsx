@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUser,
-  unsetUser,
-  authFailure,
+  setError,unsetError,
+  
   setLoading,
 } from "../../slices/authSlice";
 import { loginApi } from "../../api/authApi";
@@ -15,6 +15,13 @@ export default function Login() {
   const { loading, error } = useSelector((s) => s.auth);
   const dispatch = useDispatch();
   const nav = useNavigate();
+
+  // useEffect(() => {
+  //   return () => {
+  //     // Cleanup function to unset user on component unmount
+  //     dispatch(unsetError());
+  //   }
+  // })
 
   const submit = async (e) => {
     e.preventDefault();
@@ -32,7 +39,7 @@ export default function Login() {
     } catch (err) {
       const message =
         err?.response?.data?.message || err.message || "Login failed";
-      dispatch(authFailure(message));
+      dispatch(setError(message));
     }
   };
 

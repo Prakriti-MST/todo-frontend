@@ -26,13 +26,16 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    authFailure: (state, action) => {
+    setError: (state, action) => {
       state.loading = false;
       state.error = action.payload; // This will now be a string like "User not found"
     },
+    unsetError : (state) => {
+      state.error = null;
   },
+}
 });
 
-export const { setUser, unsetUser, authFailure, setLoading } =
+export const { setUser, unsetUser, setError,unsetError, setLoading } =
   authSlice.actions;
 export default authSlice.reducer;
