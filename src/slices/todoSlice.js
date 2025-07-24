@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const todosSlice = createSlice({
   name: "todos",
   initialState: {
@@ -14,12 +15,16 @@ const todosSlice = createSlice({
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setError : (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
     }
   },
 });
 
 export const {
   setTodos,
-  setLoading
+  setLoading,setError
 } = todosSlice.actions;
 export default todosSlice.reducer;

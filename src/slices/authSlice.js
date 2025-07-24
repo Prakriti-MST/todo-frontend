@@ -27,15 +27,22 @@ const authSlice = createSlice({
       state.error = null;
     },
     setError: (state, action) => {
-      state.loading = false;
-      state.error = action.payload; // This will now be a string like "User not found"
+      const err = action.payload?.response?.data;
+
+      // If backend returned fieldErrors, store that as error
+      if (err?.data?.fieldErrors) {
+        state.error = err.data.fieldErrors;
+      } else {
+        // fallback to general message
+        state.error = err?.message || "Something went wrong";
+      }
     },
-    unsetError : (state) => {
+    unsetError: (state) => {
       state.error = null;
+    },
   },
-}
 });
 
-export const { setUser, unsetUser, setError,unsetError, setLoading } =
+export const { setUser, unsetUser, setError, unsetError, setLoading } =
   authSlice.actions;
 export default authSlice.reducer;

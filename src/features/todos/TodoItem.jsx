@@ -40,13 +40,15 @@ export default function TodoItem({ todo }) {
         onChange={toggle}
         className="mr-2"
       />
-      <span
-        className={`flex-grow ${
-          todo.status === "completed" ? "line-through" : ""
-        }`}
-      >
-        {todo.title}
-      </span>
+      <div className="flex-grow">
+        <p className={`${todo.status === "completed" ? "line-through" : ""}`}>
+          {todo.title}
+        </p>
+        {todo.description && (
+          <p className="text-sm text-gray-500">{todo.description}</p>
+        )}
+      </div>
+
       <button onClick={remove} className="ml-4 text-red-600">
         ×
       </button>
